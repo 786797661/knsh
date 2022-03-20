@@ -1,0 +1,120 @@
+# Generated with protoc-gen-openapi
+# https://github.com/google/gnostic/tree/master/apps/protoc-gen-openapi
+
+openapi: 3.0.3
+info:
+    title: Realworld API
+    version: 0.0.1
+paths:
+    /api/user:
+        get:
+            tags:
+                - Realworld
+            description: 定义RPC接口 获取用户信息接口
+            operationId: Realworld_GetCurrentUser
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UserInfo'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/UserInfoReply'
+        post:
+            tags:
+                - Realworld
+            description: 定义RPC接口 更新用户
+            operationId: Realworld_GetProfile
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/UserInfo'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/UserInfo'
+    /api/users:
+        post:
+            tags:
+                - Realworld
+            description: 定义RPC接口 注册接口
+            operationId: Realworld_Registration
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/RegistraRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/UserInfoReply'
+    /api/users/login:
+        post:
+            tags:
+                - Realworld
+            description: 定义RPC接口 登陆接口
+            operationId: Realworld_Login
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/LoginRequest'
+                required: true
+            responses:
+                "200":
+                    description: OK
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/LoginReply'
+components:
+    schemas:
+        LoginReply:
+            type: object
+            properties:
+                user:
+                    $ref: '#/components/schemas/UserInfo'
+        LoginRequest:
+            type: object
+            properties:
+                user:
+                    $ref: '#/components/schemas/UserInfo'
+        RegistraRequest:
+            type: object
+            properties:
+                user:
+                    $ref: '#/components/schemas/UserInfo'
+        UserInfo:
+            type: object
+            properties:
+                email:
+                    type: string
+                token:
+                    type: string
+                username:
+                    type: string
+                bio:
+                    type: string
+                image:
+                    type: string
+        UserInfoReply:
+            type: object
+            properties:
+                user:
+                    $ref: '#/components/schemas/UserInfo'
+tags:
+    - name: Realworld
