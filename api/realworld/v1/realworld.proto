@@ -51,8 +51,7 @@ service Realworld {
 	rpc GetProfile(GetProfileRequest) returns(Profile){
 		//定义一个HTTP接口
 		option (google.api.http) = {
-			get:"/api/user/{username}",
-      body:"*"
+			get:"/api/user/{username}"
 		};
 	}
 
@@ -68,8 +67,7 @@ service Realworld {
   rpc UnfollowUser(UnfollowUserRequest) returns(Profile){
     //定义一个HTTP接口
     option (google.api.http) = {
-      delete:"/api/profiles/{username}/follow",
-      body:"*";
+      delete:"/api/profiles/{username}/follow"
     };
   }
 
@@ -78,7 +76,7 @@ service Realworld {
     //定义一个HTTP接口
     option (google.api.http) = {
       get:"/api/articles",
-      body:"*"
+
     };
   }
 
@@ -87,15 +85,14 @@ service Realworld {
     //定义一个HTTP接口
     option (google.api.http) = {
       get:"/api/articles/feed",
-      body:"*"
+
     };
   }
   //定义RPC接口 获取评论
   rpc GetArticle(GetArticleRequest) returns(SingleArticle){
     //定义一个HTTP接口
     option (google.api.http) = {
-      get:"/api/articles/{slug}",
-      body:"*"
+      get:"/api/articles/{slug}"
     };
   }
 
@@ -123,8 +120,7 @@ service Realworld {
   rpc DeleteArticle(DeleteArticleRequest) returns(DeleteArticleResponse){
     //定义一个HTTP接口
     option (google.api.http) = {
-      delete:"/api/articles/{slug}",
-      body:"*"
+      delete:"/api/articles/{slug}"
     };
   }
 
@@ -141,7 +137,7 @@ service Realworld {
   rpc GetCommentsToAnArticle(GetCommentsToAnArticleRequest) returns(MultipleComments){
     //定义一个HTTP接口
     option (google.api.http) = {
-      get:"/api/articles/{slug}/comments",
+      get:"/api/articles/{slug}/comments"
     };
   }
 
@@ -149,7 +145,7 @@ service Realworld {
   rpc DeleteComment(DeleteCommentRequest) returns(DeleteCommentResponse){
     //定义一个HTTP接口
     option (google.api.http) = {
-      get:"/api/articles/{slug}/comments/{id}",
+      get:"/api/articles/{slug}/comments/{id}"
     };
   }
 
@@ -157,7 +153,7 @@ service Realworld {
   rpc FavoriteArticle(FavoriteArticleRequest) returns(SingleArticle){
     //定义一个HTTP接口
     option (google.api.http) = {
-      get:"/api/articles/{slug}/favorite",
+      get:"/api/articles/{slug}/favorite"
     };
   }
 
@@ -165,14 +161,14 @@ service Realworld {
   rpc UnfavoriteArticle(UnfavoriteArticleRequest) returns(SingleArticle){
     //定义一个HTTP接口
     option (google.api.http) = {
-      delete:"/api/articles/{slug}/favorite",
+      delete:"/api/articles/{slug}/favorite"
     };
   }
   //定义RPC接口 获取评论
   rpc GetTags(GetTagsRequest) returns(Tags){
     //定义一个HTTP接口
     option (google.api.http) = {
-      get:"/api/tags",
+      get:"/api/tags"
     };
   }
 }

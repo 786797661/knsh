@@ -141,7 +141,7 @@ func _Realworld_UpdateUser0_HTTP_Handler(srv RealworldHTTPServer) func(ctx http.
 func _Realworld_GetProfile0_HTTP_Handler(srv RealworldHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in GetProfileRequest
-		if err := ctx.Bind(&in); err != nil {
+		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
 		if err := ctx.BindVars(&in); err != nil {
@@ -185,7 +185,7 @@ func _Realworld_FollowUser0_HTTP_Handler(srv RealworldHTTPServer) func(ctx http.
 func _Realworld_UnfollowUser0_HTTP_Handler(srv RealworldHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in UnfollowUserRequest
-		if err := ctx.Bind(&in); err != nil {
+		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
 		if err := ctx.BindVars(&in); err != nil {
@@ -207,7 +207,7 @@ func _Realworld_UnfollowUser0_HTTP_Handler(srv RealworldHTTPServer) func(ctx htt
 func _Realworld_ListArticles0_HTTP_Handler(srv RealworldHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in ListArticlesRequest
-		if err := ctx.Bind(&in); err != nil {
+		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
 		http.SetOperation(ctx, "/api.realworld.v1.Realworld/ListArticles")
@@ -226,7 +226,7 @@ func _Realworld_ListArticles0_HTTP_Handler(srv RealworldHTTPServer) func(ctx htt
 func _Realworld_FeedArticles0_HTTP_Handler(srv RealworldHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in FeedArticlesRequest
-		if err := ctx.Bind(&in); err != nil {
+		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
 		http.SetOperation(ctx, "/api.realworld.v1.Realworld/FeedArticles")
@@ -245,7 +245,7 @@ func _Realworld_FeedArticles0_HTTP_Handler(srv RealworldHTTPServer) func(ctx htt
 func _Realworld_GetArticle0_HTTP_Handler(srv RealworldHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in GetArticleRequest
-		if err := ctx.Bind(&in); err != nil {
+		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
 		if err := ctx.BindVars(&in); err != nil {
@@ -308,7 +308,7 @@ func _Realworld_UpdateArticle0_HTTP_Handler(srv RealworldHTTPServer) func(ctx ht
 func _Realworld_DeleteArticle0_HTTP_Handler(srv RealworldHTTPServer) func(ctx http.Context) error {
 	return func(ctx http.Context) error {
 		var in DeleteArticleRequest
-		if err := ctx.Bind(&in); err != nil {
+		if err := ctx.BindQuery(&in); err != nil {
 			return err
 		}
 		if err := ctx.BindVars(&in); err != nil {
@@ -515,10 +515,10 @@ func (c *RealworldHTTPClientImpl) CreateArticle(ctx context.Context, in *CreateA
 func (c *RealworldHTTPClientImpl) DeleteArticle(ctx context.Context, in *DeleteArticleRequest, opts ...http.CallOption) (*DeleteArticleResponse, error) {
 	var out DeleteArticleResponse
 	pattern := "/api/articles/{slug}"
-	path := binding.EncodeURL(pattern, in, false)
+	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/api.realworld.v1.Realworld/DeleteArticle"))
 	opts = append(opts, http.PathTemplate(pattern))
-	err := c.cc.Invoke(ctx, "DELETE", path, in, &out, opts...)
+	err := c.cc.Invoke(ctx, "DELETE", path, nil, &out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -554,10 +554,10 @@ func (c *RealworldHTTPClientImpl) FavoriteArticle(ctx context.Context, in *Favor
 func (c *RealworldHTTPClientImpl) FeedArticles(ctx context.Context, in *FeedArticlesRequest, opts ...http.CallOption) (*MultipleArticles, error) {
 	var out MultipleArticles
 	pattern := "/api/articles/feed"
-	path := binding.EncodeURL(pattern, in, false)
+	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/api.realworld.v1.Realworld/FeedArticles"))
 	opts = append(opts, http.PathTemplate(pattern))
-	err := c.cc.Invoke(ctx, "GET", path, in, &out, opts...)
+	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -580,10 +580,10 @@ func (c *RealworldHTTPClientImpl) FollowUser(ctx context.Context, in *FollowUser
 func (c *RealworldHTTPClientImpl) GetArticle(ctx context.Context, in *GetArticleRequest, opts ...http.CallOption) (*SingleArticle, error) {
 	var out SingleArticle
 	pattern := "/api/articles/{slug}"
-	path := binding.EncodeURL(pattern, in, false)
+	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/api.realworld.v1.Realworld/GetArticle"))
 	opts = append(opts, http.PathTemplate(pattern))
-	err := c.cc.Invoke(ctx, "GET", path, in, &out, opts...)
+	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -619,10 +619,10 @@ func (c *RealworldHTTPClientImpl) GetCurrentUser(ctx context.Context, in *GetCur
 func (c *RealworldHTTPClientImpl) GetProfile(ctx context.Context, in *GetProfileRequest, opts ...http.CallOption) (*Profile, error) {
 	var out Profile
 	pattern := "/api/user/{username}"
-	path := binding.EncodeURL(pattern, in, false)
+	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/api.realworld.v1.Realworld/GetProfile"))
 	opts = append(opts, http.PathTemplate(pattern))
-	err := c.cc.Invoke(ctx, "GET", path, in, &out, opts...)
+	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -645,10 +645,10 @@ func (c *RealworldHTTPClientImpl) GetTags(ctx context.Context, in *GetTagsReques
 func (c *RealworldHTTPClientImpl) ListArticles(ctx context.Context, in *ListArticlesRequest, opts ...http.CallOption) (*MultipleArticles, error) {
 	var out MultipleArticles
 	pattern := "/api/articles"
-	path := binding.EncodeURL(pattern, in, false)
+	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/api.realworld.v1.Realworld/ListArticles"))
 	opts = append(opts, http.PathTemplate(pattern))
-	err := c.cc.Invoke(ctx, "GET", path, in, &out, opts...)
+	err := c.cc.Invoke(ctx, "GET", path, nil, &out, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -697,10 +697,10 @@ func (c *RealworldHTTPClientImpl) UnfavoriteArticle(ctx context.Context, in *Unf
 func (c *RealworldHTTPClientImpl) UnfollowUser(ctx context.Context, in *UnfollowUserRequest, opts ...http.CallOption) (*Profile, error) {
 	var out Profile
 	pattern := "/api/profiles/{username}/follow"
-	path := binding.EncodeURL(pattern, in, false)
+	path := binding.EncodeURL(pattern, in, true)
 	opts = append(opts, http.Operation("/api.realworld.v1.Realworld/UnfollowUser"))
 	opts = append(opts, http.PathTemplate(pattern))
-	err := c.cc.Invoke(ctx, "DELETE", path, in, &out, opts...)
+	err := c.cc.Invoke(ctx, "DELETE", path, nil, &out, opts...)
 	if err != nil {
 		return nil, err
 	}

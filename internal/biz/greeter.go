@@ -14,19 +14,19 @@ type GreeterRepo interface {
 	UpdateGreeter(context.Context, *Greeter) error
 }
 
-type GreeterUsecase struct {
+type GreeterRealworld struct {
 	repo GreeterRepo
 	log  *log.Helper
 }
 
-func NewGreeterUsecase(repo GreeterRepo, logger log.Logger) *GreeterUsecase {
-	return &GreeterUsecase{repo: repo, log: log.NewHelper(logger)}
+func NewGreeterRealworld(repo GreeterRepo, logger log.Logger) *GreeterRealworld {
+	return &GreeterRealworld{repo: repo, log: log.NewHelper(logger)}
 }
 
-func (uc *GreeterUsecase) Create(ctx context.Context, g *Greeter) error {
+func (uc *GreeterRealworld) Create(ctx context.Context, g *Greeter) error {
 	return uc.repo.CreateGreeter(ctx, g)
 }
 
-func (uc *GreeterUsecase) Update(ctx context.Context, g *Greeter) error {
+func (uc *GreeterRealworld) Update(ctx context.Context, g *Greeter) error {
 	return uc.repo.UpdateGreeter(ctx, g)
 }
