@@ -9,12 +9,11 @@ import (
 // GreeterService is a greeter service.
 type RealworldService struct {
 	v1.UnimplementedRealworldServer
-
-	uc  *biz.GreeterUsecase
+	uc  *biz.GreeterRealworld
 	log *log.Helper
 }
 
 // NewGreeterService new a greeter service.
-func NewrealworldService(uc *biz.GreeterUsecase, logger log.Logger) *RealworldService {
+func NewrealworldService(uc *biz.GreeterRealworld, logger log.Logger) *RealworldService {
 	return &RealworldService{uc: uc, log: log.NewHelper(logger)}
 }
