@@ -217,6 +217,7 @@ message LoginRequest{
     string email=1;
     string password=2;
   }
+  user userInfo=1;
 }
 message LoginReply{
 	UserInfo user=1;
@@ -228,6 +229,7 @@ message RegistraRequest{
     string email=2;
     string password=3;
   }
+    user userInfo=1;
 }
 
 message GetCurrentUserRequest{
@@ -244,6 +246,7 @@ message UpdateUserRequest{
       string bio=2;
       string image=3;
   }
+  user userInfo =1;
 }
 
 message GetProfileRequest{
@@ -283,6 +286,7 @@ message CreateArticleRequest{
     string body=3;
     repeated string tagList=4;
   }
+    article articleInfo=1;
 }
 message UserInfo {
   string email = 1;
