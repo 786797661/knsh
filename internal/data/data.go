@@ -9,7 +9,7 @@ import (
 )
 
 // ProviderSet is data providers.
-var ProviderSet = wire.NewSet(NewData, NewDB, NewGreeterRepo)
+var ProviderSet = wire.NewSet(NewData, NewDB, NewRealworldRepo)
 
 // Data .
 type Data struct {
@@ -28,6 +28,7 @@ func NewData(c *conf.Data, logger log.Logger, db *gorm.DB) (*Data, func(), error
 // NewData .
 func NewDB(c *conf.Data) *gorm.DB {
 	db, err := gorm.Open(mysql.Open(c.Database.Source), &gorm.Config{})
+
 	if err != nil {
 		panic("failed to connect database")
 	}

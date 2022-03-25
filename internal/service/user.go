@@ -7,13 +7,7 @@ import (
 
 func (realworld *RealworldService) Login(ctx context.Context, req *v1.LoginRequest) (*v1.LoginReply, error) {
 
-	userInfo := v1.UserInfo{
-		Email:    req.UserInfo.Email,
-		Username: req.UserInfo.Email,
-		Token:    "",
-	}
-
-	return &v1.LoginReply{User: &userInfo}, nil
+	return realworld.uc.Login(ctx, req)
 }
 
 func (realworld *RealworldService) AddCommentsToAnArticle(ctx context.Context, req *v1.AddCommentsToAnArticleRequest) (*v1.SingleComment, error) {

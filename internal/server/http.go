@@ -1,12 +1,16 @@
 package server
 
 import (
+	"context"
 	"github.com/go-kratos/kratos/v2/log"
+	"github.com/go-kratos/kratos/v2/middleware/auth/jwt"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
+	"github.com/go-kratos/kratos/v2/middleware/selector"
 	"github.com/go-kratos/kratos/v2/transport/http"
 	v1 "knsh/api/realworld/v1"
 	"knsh/internal/conf"
 	"knsh/internal/service"
+	//jwt2 "github.com/golang-jwt/jwt/v4"
 )
 
 // NewHTTPServer new a HTTP server.
@@ -14,6 +18,11 @@ func NewHTTPServer(c *conf.Server, greeter *service.RealworldService, logger log
 	var opts = []http.ServerOption{
 		http.Middleware(
 			recovery.Recovery(),
+			//selector.Server(
+			//	jwt.Server(func(token *jwt2.Token) (interface{}, error) {
+			//		return []byte(ac.JwtKey), nil
+			//	}, jwt.WithSigningMethod(jwt2.SigningMethodHS256)),
+			//).Match(NewWhiteListMatcher()).Build(),
 		),
 	}
 	if c.Http.Network != "" {
@@ -28,4 +37,18 @@ func NewHTTPServer(c *conf.Server, greeter *service.RealworldService, logger log
 	srv := http.NewServer(opts...)
 	v1.RegisterRealworldHTTPServer(srv, greeter)
 	return srv
+}
+
+// NewWhiteListMatcher 白名单不需要token验证的接口
+func NewWhiteListMatcher() selector.MatchFunc {
+	whiteList := make(map[string]struct{})
+	whiteList["/shop.shop.v1.Shop/Captcha"] = struct{}{}
+	whiteList["/shop.shop.v1.Shop/Login"] = struct{}{}
+	whiteList["/shop.shop.v1.Shop/Register"] = struct{}{}
+	return func(ctx context.Context, operation string) bool {
+		if _, ok := whiteList[operation]; ok {
+			return false
+		}
+		return true
+	}
 }
