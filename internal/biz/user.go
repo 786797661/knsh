@@ -2,12 +2,11 @@ package biz
 
 import (
 	"context"
-	"fmt"
 	v1 "knsh/api/realworld/v1"
 )
 
 func (realworld *GreeterRealworld) Login(ctx context.Context, req *v1.LoginRequest) (*v1.LoginReply, error) {
-	fmt.Println(req)
+
 	return realworld.repo.Login(ctx, req)
 }
 

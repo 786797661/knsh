@@ -19,19 +19,30 @@ import (
 // Injectors from wire.go:
 
 // initApp init kratos application.
-func initApp(confServer *conf.Server, confData *conf.Data, logger log.Logger) (*kratos.App, func(), error) {
+func initApp(confServer *conf.Server, confData *conf.Data, auth *conf.Auth, registry *conf.Registry, logger log.Logger) (*kratos.App, func(), error) {
 	db := data.NewDB(confData)
+	println("NewDB")
 	dataData, cleanup, err := data.NewData(confData, logger, db)
+	println("NewData")
 	if err != nil {
 		return nil, nil, err
 	}
-	greeterRepo := data.NewRealworldRepo(dataData, logger)
-	greeterRealworld := biz.NewGreeterRealworld(greeterRepo, logger)
+	realworldRepo := data.NewRealworldRepo(dataData, logger)
+	println("NewRealworldRepo")
+	greeterRealworld := biz.NewGreeterRealworld(realworldRepo, logger)
+	println("NewGreeterRealworld")
 	realworldService := service.NewrealworldService(greeterRealworld, logger)
-	httpServer := server.NewHTTPServer(confServer, realworldService, logger)
-	grpcServer := server.NewGRPCServer(confServer, realworldService, logger)
-	app := newApp(logger, httpServer, grpcServer)
+	println("NewrealworldService")
+	httpServer := server.NewHTTPServer(confServer, auth, realworldService, logger)
+	println("3")
+	grpcServer := server.NewGRPCServer(confServer, auth, realworldService, logger)
+	println("4")
+	registrar := server.NewRegistrar(registry)
+	println("5")
+	app := newApp(logger, httpServer, grpcServer, registrar)
+	println("6")
 	return app, func() {
 		cleanup()
+		println("7")
 	}, nil
 }

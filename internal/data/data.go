@@ -11,6 +11,7 @@ import (
 // ProviderSet is data providers.
 var ProviderSet = wire.NewSet(NewData, NewDB, NewRealworldRepo)
 
+//var ProviderSet = wire.NewSet(NewData, NewDB, NewTransaction, NewRedis, NewRealworldRepo)
 // Data .
 type Data struct {
 	// TODO wrapped database client
@@ -25,7 +26,7 @@ func NewData(c *conf.Data, logger log.Logger, db *gorm.DB) (*Data, func(), error
 	return &Data{db: db}, cleanup, nil
 }
 
-// NewData .
+// NewDB .
 func NewDB(c *conf.Data) *gorm.DB {
 	db, err := gorm.Open(mysql.Open(c.Database.Source), &gorm.Config{})
 

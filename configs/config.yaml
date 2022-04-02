@@ -1,14 +1,19 @@
 server:
   http:
-    addr: 0.0.0.0:8752
+    addr: 0.0.0.0:8762
     timeout: 1s
   grpc:
-    addr: 0.0.0.0:9100
+    addr: 0.0.0.0:9110
     timeout: 1s
 data:
   database:
     source: root:dangerous@tcp(127.0.0.1:3306)/realowrld01?charset=utf8mb4&parseTime=True&loc=Local
   redis:
     addr: 127.0.0.1:6379
+    dial_timeout: 1s
     read_timeout: 0.2s
     write_timeout: 0.2s
+trace:
+    endpoint: http://127.0.0.1:16686/api/traces
+auth:
+  jwt_key: "110"

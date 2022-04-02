@@ -6,7 +6,6 @@ import (
 )
 
 func (realworld *RealworldService) Login(ctx context.Context, req *v1.LoginRequest) (*v1.LoginReply, error) {
-
 	return realworld.uc.Login(ctx, req)
 }
 
@@ -15,6 +14,7 @@ func (realworld *RealworldService) AddCommentsToAnArticle(ctx context.Context, r
 	return &v1.SingleComment{}, nil
 }
 func (realworld *RealworldService) CreateArticle(ctx context.Context, req *v1.CreateArticleRequest) (*v1.SingleArticle, error) {
+
 	return &v1.SingleArticle{}, nil
 }
 func (realworld *RealworldService) DeleteArticle(ctx context.Context, req *v1.DeleteArticleRequest) (*v1.DeleteArticleResponse, error) {
