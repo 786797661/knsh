@@ -7,6 +7,7 @@ import (
 	"github.com/go-kratos/kratos/v2/middleware/ratelimit"
 	"github.com/go-kratos/kratos/v2/middleware/recovery"
 	"github.com/go-kratos/kratos/v2/middleware/selector"
+	"github.com/go-kratos/kratos/v2/middleware/tracing"
 	"github.com/go-kratos/kratos/v2/transport/grpc"
 	jwtv4 "github.com/golang-jwt/jwt/v4"
 	v1 "knsh/api/realworld/v1"
@@ -21,6 +22,7 @@ func NewGRPCServer(c *conf.Server, cau *conf.Auth, greeter *service.RealworldSer
 			recovery.Recovery(),
 			logging.Server(logger),
 			ratelimit.Server(),
+			tracing.Server(), // 新增 tracing
 			selector.Server(jwt.Server(func(token *jwtv4.Token) (interface{}, error) {
 				return []byte(cau.JwtKey), nil
 			})).Match(NewWhiteListMatcher()).Build(),
